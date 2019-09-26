@@ -11,7 +11,10 @@ package stats;
 
 public class Health {
 	
-	
+	//possible Additions
+	//Bonus HP from equipment
+	//max health increasing
+		
 	private int currentHP;
 	private int maxHP;
 	
