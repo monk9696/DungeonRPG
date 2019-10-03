@@ -12,6 +12,12 @@ public class StatusModifiers {
 	public StatusModifiers(Health h){
 		health = h;
 	}
+
+	public void turnTic(){
+		for(StatusEffect effect: statArr) {
+			effect.tic(health);
+		}
+	}
 	
 	public void addEffect(StatusEffect stat) {
 		StatusEffect find = getEffect(stat.getEffectType());
@@ -19,12 +25,6 @@ public class StatusModifiers {
 			find.update(stat);
 		}else {
 			statArr.add(stat);
-		}
-	}
-	
-	public void turnTic(){
-		for(StatusEffect effect: statArr) {
-			effect.tic(health);
 		}
 	}
 	
@@ -60,8 +60,6 @@ public class StatusModifiers {
 		}
 		System.out.println("-----------------------------");
 	}
-	
-	
 	
 	//Spell status
 	//Ability spec status
