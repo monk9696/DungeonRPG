@@ -13,25 +13,20 @@ public abstract class GenClass {
 	
 	public abstract String getSpellName(int spell);
 	
-	public void useSpell(int spellNum, Character user, Character target) {
+	public boolean useSpell(int spellNum, Character user, Character target) {
 		switch(spellNum) {
 		case 1:
-			spell1(user,target);
-			break;
+			return spell1(user,target);
 		case 2:
-			spell2(user,target);
-			break;
+			return spell2(user,target);
 		case 3:
-			spell3(user,target);
-			break;
+			return spell3(user,target);
 		case 4:
-			spell4(user,target);
-			break;
+			return spell4(user,target);
 		case 5:
-			spell5(user,target);
-			break;
+			return spell5(user,target);
 		default:
-			break;
+			return false;
 		}
 	}
 	protected abstract boolean spell1(Character user, Character target);

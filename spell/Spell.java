@@ -42,7 +42,7 @@ public class Spell {
 	}
 	//garunteed hit on your enemy
 	public void suddenStrike(Character user, Character target){	
-		target.damageTaken(user.attack());
+		target.damageTaken(user.getDamage());
 	}
 	public void wordOfHealing(Character user, Character target){
 		target.heal((user.getLevel()*3));

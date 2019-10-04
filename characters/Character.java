@@ -1,6 +1,7 @@
 package characters;
 
 import gear.Equipment;
+import gear.Inventory;
 import stats.Health;
 import stats.StatusModifiers;
 import status.NullEffect;
@@ -8,14 +9,14 @@ import status.StatusEffect;
 
 public abstract class Character {
 
-	protected Equipment equip;
+	protected Inventory inv;
 	protected Health h;
 	protected StatusModifiers status;
 	protected int level = 1;
 	
-	public Character(Health hp1, Equipment equip1){
-		h = hp1;
-		equip = equip1;
+	public Character(Health hp, Inventory inv){
+		h = hp;
+		this.inv = inv;
 		status = new StatusModifiers(h);
 	}
 		
@@ -36,11 +37,18 @@ public abstract class Character {
 	
 	
 	//equipment
+	public void setEquipment(Equipment e) {
+		inv.setEquip(e);
+	}
+	public Equipment getEquipment() {
+		return inv.getEquip();
+	}
+	
 	public int getDefence(){
-		return equip.getDefence();
+		return inv.getEquip().getDefence();
 	}	
 	public int getAgility() {
-		return equip.getAgility();
+		return inv.getEquip().getAgility();
 	}
 	public abstract int getDamage();
 	
@@ -51,11 +59,10 @@ public abstract class Character {
 	}
 	
 	//combat
-	public abstract int attack();
 	public abstract void turnEnd();
 
 	//Spell
-	public abstract int spell(int spellSelector, Character subject, Character enemy);
+	public abstract boolean spell(int spellSelector, Character enemy);
 		
 	//Status
 	public StatusModifiers getStatus(){
