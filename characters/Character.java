@@ -4,7 +4,6 @@ import gear.Equipment;
 import gear.Inventory;
 import stats.Health;
 import stats.StatusModifiers;
-import status.NullEffect;
 import status.StatusEffect;
 
 public abstract class Character {
@@ -69,7 +68,10 @@ public abstract class Character {
 		return status;
 	}
 	public boolean checkEffect(String effect){
-		return (status.getEffect(effect) != (new NullEffect()));
+		if(status.getEffect(effect).getEffectType() != "Null") {
+			return true;
+		}
+		return false;
 	}
 	public void setStatus(StatusEffect stat) {
 		status.addEffect(stat);

@@ -6,6 +6,7 @@ import gear.Equipment;
 import gear.Inventory;
 import gear.Weapon;
 import stats.Health;
+import status.Stunned;
 import classes.*;
 
 public class CharacterRunner {
@@ -18,6 +19,9 @@ public class CharacterRunner {
 		enemy.getEquipment().setPrimary(new Weapon("LongSword", 15, false));
 		
 		enemy.damageTaken(main.getDamage());
+		main.getStatus().addEffect(new Stunned(3));
+		System.out.println(main.checkEffect("Stunned"));
+		System.out.println(main.getStatus().getEffect("Stunned").getEffectType());
 		
 		
 		
