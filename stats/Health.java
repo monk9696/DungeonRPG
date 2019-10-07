@@ -34,7 +34,9 @@ public class Health {
 	 * @return Remaining Current Health
 	 */
 	public int hit(int damage){
-		currentHP = currentHP - damage;
+		if(damage > 0) {
+			currentHP = currentHP - damage;
+		}
 		return currentHP;
 	}
 	

@@ -21,7 +21,6 @@ public class Player extends Character {
 		charClass = clas;
 	}
 	
-	
 	public Inventory getInventory() {
 		return inventory;
 	}
@@ -38,11 +37,22 @@ public class Player extends Character {
 	}
 
 	public void damageTaken(int damage) {
-		this.h.hit(damage);
+		if(this.checkEffect("Reflect")) {
+			status.removeEffect("Reflect");
+		}else {
+			damage -= this.getDefence();
+			this.h.hit(damage);
+		}
 	}
 
 	public int getDamage() {
-		return inventory.getEquip().getDamage();
+		int dam = 0;
+		dam = inventory.getEquip().getDamage();
+		if(this.checkEffect("Embolden")) {
+			dam *= 2.5;
+			status.removeEffect("Embolden");
+		}
+		return dam;
 	}
 
 	public void turnEnd() {

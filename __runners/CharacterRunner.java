@@ -17,6 +17,11 @@ public class CharacterRunner {
 		
 		enemy.getEquipment().setPrimary(new Weapon("LongSword", 15, false));
 		
+		enemy.damageTaken(main.getDamage());
+		
+		
+		
+		
 		
 		System.out.println(main.getDamage());
 		System.out.println(enemy.getDamage());
