@@ -79,7 +79,7 @@ public class Money {
 		gold = (int) (total % 100);
 		total = (total - gold)/100;
 		plat = (int) total;
-		printMoney();
+//		printMoney();
 	}	
 	
 }

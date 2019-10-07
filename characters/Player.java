@@ -20,7 +20,6 @@ public class Player extends Character {
 		inventory = inv;
 		charClass = clas;
 	}
-
 	
 	
 	public Inventory getInventory() {

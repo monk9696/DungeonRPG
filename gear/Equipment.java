@@ -18,6 +18,12 @@ public class Equipment {
 		this.armor = armor;
 	}
 	
+	public Equipment(Weapon primary, Weapon secondary) {
+		this.primary = primary;
+		this.secondary = secondary;
+		this.armor = new ArmorSet();
+	}
+	
 	public Equipment (Weapon primary, Weapon secondary, ArmorSet armor){
 		this.primary = primary;
 		this.secondary = secondary;
@@ -112,9 +118,5 @@ public class Equipment {
 				return null;			
 		}
 	}
-	
-	
-	
-	
-	
+		
 }

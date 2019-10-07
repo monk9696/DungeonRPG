@@ -17,6 +17,12 @@ public class Inventory {
 		equip = new Equipment();
 	}
 
+	public Inventory(Equipment equip) {
+		money = new Money();
+		armorList = new ArrayList<Armor>();
+		weaponList = new ArrayList<Weapon>();
+		this.equip = equip;
+	}
 
 	public Equipment getEquip() {
 		return equip;
