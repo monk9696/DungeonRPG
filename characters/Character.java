@@ -6,7 +6,7 @@ import stats.Health;
 import stats.StatusModifiers;
 import status.StatusEffect;
 
-public abstract class Character {
+public abstract class Character implements Comparable<Character> {
 
 	protected Inventory inv;
 	protected Health h;
@@ -50,7 +50,7 @@ public abstract class Character {
 		return inv.getEquip().getAgility();
 	}
 	public abstract int getDamage();
-	
+	public abstract Inventory getInventory();
 	
 	//exp
 	public int getLevel(){
@@ -83,6 +83,16 @@ public abstract class Character {
 	}
 	public void setEmbolden(){
 		status.setEmbolden();
+	}
+	
+	public int compareTo(Character s) {
+		if(s.getAgility() == this.getAgility()){
+			return 0;
+		}else if(s.getAgility() < this.getAgility()) {
+			return 1;
+		}else {
+			return -1;
+		}
 	}
 	
 }

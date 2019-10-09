@@ -22,11 +22,7 @@ public class CharacterRunner {
 		main.getStatus().addEffect(new Stunned(3));
 		System.out.println(main.checkEffect("Stunned"));
 		System.out.println(main.getStatus().getEffect("Stunned").getEffectType());
-		
-		
-		
-		
-		
+				
 		System.out.println(main.getDamage());
 		System.out.println(enemy.getDamage());
 		

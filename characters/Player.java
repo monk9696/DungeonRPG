@@ -4,7 +4,7 @@ import classes.GenClass;
 import gear.Inventory;
 import stats.Health;
 
-public class Player extends Character {
+public class Player extends Character implements Comparable<Character>{
 
 	private Inventory inventory;
 	private GenClass charClass;
@@ -64,6 +64,17 @@ public class Player extends Character {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public int compareTo(Character s) {
+		if(s.getAgility() == this.getAgility()) {
+			return 0;
+		}else if(s.getAgility() < this.getAgility()) {
+			return 1;
+		}else {
+			return -1;
+		}
 	}
 
 }
