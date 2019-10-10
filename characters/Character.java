@@ -49,8 +49,14 @@ public abstract class Character implements Comparable<Character> {
 	public int getAgility() {
 		return inv.getEquip().getAgility();
 	}
+	public void setInventory(Inventory inv) {
+		this.inv = inv;
+		this.setEquipment(inv.getEquip());
+	}
+	public Inventory getInventory() {
+		return inv;
+	}
 	public abstract int getDamage();
-	public abstract Inventory getInventory();
 	
 	//exp
 	public int getLevel(){

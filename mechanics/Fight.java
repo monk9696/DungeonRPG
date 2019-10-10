@@ -2,15 +2,16 @@ package mechanics;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.Random;
 import java.util.Scanner;
 
 import characters.Character;
+import characters.Player;
 
 public class Fight {
-	private Character player;
+	private boolean player;
 	private ArrayList<Character> group;
-	private Character enemy;
 	private Random gen = new Random();
 	private Scanner scan = new Scanner(System.in);
 	//private String sc;
@@ -23,22 +24,40 @@ public class Fight {
 	public void engagement(Character[] e){
 		group = new ArrayList<Character>(e.length);
 		for(Character next: e) {
-			if(next.getClass().getName() == "Player") {
-				player = next;
-				group.add(player);
+			if(next instanceof Player){
+				System.out.println("Player Added");
+				player = true;
+				group.add(next);
 			}else{
 				group.add(next);				
 			}
 		}
 		Collections.sort(group);
-		for(Character i: group) {			
+		for(Character i: group) {
 			System.out.println(i.getHP() + " " + i.getAgility());
 		}
-		/*
-		while(group.size() > 1 && player.getHP() > 0) {
-			
+		
+		System.out.println("This is the begining of combat");
+		Iterator<Character> g = group.iterator();
+		
+		while(group.size() > 1 && player) {
+			if(g.hasNext()) {
+				Character next = g.next();
+				System.out.println(next.getHP() + " " + next.getAgility());
+				if (next instanceof Player) {
+					player = false;
+					System.out.println("Player Removed");
+				}
+				g.remove();
+				
+			}
 		}
-		*/
+		System.out.println("Out");
+		for(Character i: group) {
+			System.out.println(i.getHP() + " " + i.getAgility());
+		}
+		
+		
 		/*
 		System.out.println("Combat has started");
 		while (player.getHP() > 0 && enemy.getHP() > 0){
