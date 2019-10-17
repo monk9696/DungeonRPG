@@ -132,6 +132,10 @@ public class Fight {
 		}
 	}
 	
+	/*
+	 * set up the spells to be self,self, target, target, ult which is all enemies
+	 */
+	
 	public void compChoice(Character enemy, Character player){
 		//System.out.println("The enemy is choosing.");
 		String s = "a";
