@@ -7,10 +7,12 @@ import java.util.Random;
 import java.util.Scanner;
 
 import characters.Character;
+import characters.Enemy;
 import characters.Player;
 
 public class Fight {
-	private boolean player;
+
+	private Player player;
 	private ArrayList<Character> group;
 	private Random gen = new Random();
 	private Scanner scan = new Scanner(System.in);
@@ -19,112 +21,125 @@ public class Fight {
 	public Fight() {	
 	}
 	
-	
-	
 	public void engagement(Character[] e){
 		group = new ArrayList<Character>(e.length);
 		for(Character next: e) {
 			if(next instanceof Player){
 				System.out.println("Player Added");
-				player = true;
+				player = (Player) next;
 				group.add(next);
 			}else{
 				group.add(next);				
 			}
 		}
 		Collections.sort(group);
-		for(Character i: group) {
-			System.out.println(i.getHP() + " " + i.getAgility());
-		}
-		
 		System.out.println("This is the begining of combat");
 		Iterator<Character> g = group.iterator();
 		
-		while(group.size() > 1 && player) {
-			if(g.hasNext()) {
+		while(group.size() > 1 && player.getHP() > 0){
+			if(g.hasNext()){
+				//get the current player
 				Character next = g.next();
-				System.out.println(next.getHP() + " " + next.getAgility());
-				if (next instanceof Player) {
-					player = false;
-					System.out.println("Player Removed");
+				//check if the target is alive
+				if (next.getHP() > 0){
+					//printCombatants();
+					if(next instanceof Player){
+						printCombatants();
+						//get the players choice
+						playerChoice();
+					}else{
+						System.out.println("Enemy");
+						compChoice(next, player);
+					}
+					endTurn(next);
+				}else{
+					g.remove();
 				}
-				g.remove();
-				
+			}else{
+				g = group.iterator();
 			}
 		}
 		System.out.println("Out");
-		for(Character i: group) {
-			System.out.println(i.getHP() + " " + i.getAgility());
+		for(Character i: group){
+			System.out.println(i);
+		}	
+	}
+	
+	
+	public void printCombatants() {
+		for(Character cha: group) {
+			System.out.println(cha);
 		}
-		
-		
-		/*
-		System.out.println("Combat has started");
-		while (player.getHP() > 0 && enemy.getHP() > 0){
-			System.out.println();
-			System.out.println("Your HP is: " + player.getHP());
-			System.out.println("Enemy HP is: " + enemy.getHP());
-			System.out.println();
-			if (!(player.checkEffect("Stunned") || player.checkEffect("Confused"))){
-				System.out.println("What do you chose to do?");
-				this.printChoice();
-				this.combatChoice(scan.next());
-			}else{
-				System.out.println("You are unable to make an move due to a status effect that you are afflicted");
+	}
+	
+	public void printCombatants(int i) {
+		for(Character cha: group) {
+			if(cha instanceof Enemy) {
+				System.out.println((i++) + " " + cha.toString());				
 			}
-			endTurn(player);
-			System.out.println();
-			if (enemy.getHP() > 0){
-				if(!enemy.checkEffect("Stunned") || player.checkEffect("Confused")) {
-					System.out.println("Enemy's turn");
-					//this.compChoice(enemy.ai());					
+		}
+	}
+	
+	public Character getEnemy(int pos){
+		int i = 1;
+		for(Character cha: group){
+			if(cha instanceof Enemy){
+				if (pos == i){
+					return cha;
+				}else{
+					i++;
 				}
 			}
-			endTurn(enemy);
 		}
-		System.out.println();
-		if(player.getHP() <= 0){
-			System.out.println("You died");
-			return 1;
-		}else{
-			System.out.println("You survived, you get Exp");
-			endCombat();
-			return 0;
-		}*/
+		return null;
 	}
 	
-	public void printChoice() {
+	public void playerChoice(){
+		System.out.println("What do you want to do");
 		System.out.println("Attack, Nothing, Spell, Menu");
-	}
-	
-	
-	public void combatChoice(String s){
-		switch (s){
+		String choice = scan.next();
+		switch (choice){
 			case "attack": 
-				this.combatAttack("player");
+				System.out.println("Which enemy do you want to attack");
+				printCombatants(1);
+				String sel = scan.next();
+				int pos;
+				try{
+					pos = Integer.parseInt(sel);
+					Character c = getEnemy(pos);
+					if(c != null){
+						c.damageTaken(player.getDamage());
+						break;
+					}
+				}catch (Exception e) {
+					System.out.println(e);
+				}
+				System.out.println("Selected choice was not valid");
+				playerChoice();
 				break;
 			case "nothing":
-				this.combatWait(true);
+				System.out.println("You did nothing");
 				break;
 			case "spell":
-				this.spell();
+				this.spell(player);
 				break;
 			case "menu":
 				this.menu();
 				break;
 			default:
 				System.out.println("Invalid input try again");
-				this.combatChoice(scan.next());
+				playerChoice();
 		}
 	}
 	
-	public void compChoice(String s){
+	public void compChoice(Character enemy, Character player){
 		//System.out.println("The enemy is choosing.");
+		String s = "a";
 		if(!enemy.checkEffect("Stunned") && !enemy.checkEffect("Confused")){
 			switch (s){
 				case "attack":
 					System.out.println("The enemy chose to attack");
-					this.combatAttack("enemy");
+					player.damageTaken(enemy.getDamage());
 					break;
 				case "heal":
 					System.out.println("The enemy chose to heal");
@@ -147,40 +162,14 @@ public class Fight {
 					break;
 				default:
 					System.out.println("AI choice error. The robots are not taking over!!, They are however going crazy by using powers they are not allowed, Luckily we put in a saftey net for this and decided to kill the program. Your welcome for saving you from their unstopable attack. ");
-					System.exit(0);
+					//System.exit(0);
 			}
-		}else{
-			this.combatWait(false);
-		}
-	}
-	
-	public void combatWait(boolean t){
-		if (t == true){
-			System.out.println("You did nothing");
 		}else{
 			System.out.println("The enemy did nothing");
 		}
 	}
-	
-	public void combatAttack(String s){
-		switch (s){
-			case "player":
-				if(this.dieD20() == true){
-					enemy.damageTaken(player.getDamage());
-				}
-				break;
-			case "enemy":
-				if(this.dieD20() == false){
-					player.damageTaken(enemy.getDamage());
-				}
-				break;
-			default:
-				System.out.println("Combat base attack attacker error! Who is attacking? You may know, but I the computer have no idea, but I do know who it is, " + s + " is who but I don't know who this is");
-				System.exit(0);
-		}
-	}
-	
-	public void spell(){
+			
+	public void spell(Character enemy){
 		System.out.println("Which spell do you wish to use?" /*adda list of your spells+*/);
 		String spellNum = scan.next();
 		System.out.println();
@@ -202,18 +191,16 @@ public class Fight {
 				returni = player.spell(5, enemy);
 				break;
 			case "exit":
-				System.out.println("What do you chose to do?");
-				this.combatChoice(scan.next());
+				playerChoice();
 				break;
 			default:
 				System.out.println("Error that Spell does not seem to exist");
-				System.out.println("What do you chose to do?");
-				this.combatChoice(scan.next());
+				playerChoice();
 				break;	
 		}
 		if (returni == false){
-			System.out.println("What do you chose to do?");
-			this.combatChoice(scan.next());
+			System.out.println("Spell Failed to cast Try something else");
+			playerChoice();
 		}
 	}
 	
@@ -236,14 +223,13 @@ public class Fight {
 				break;
 			case "exit":
 				System.out.println("What do you wish to do?");
-				this.combatChoice(scan.nextLine());
+				playerChoice();
 				break;
 			default:
 				System.out.println("Non valid input");
 				this.menu();
 		}
-		System.out.println("What do you chose to do?");
-		this.combatChoice(scan.next());
+		playerChoice();
 	}
 	
 	public boolean dieD20(){

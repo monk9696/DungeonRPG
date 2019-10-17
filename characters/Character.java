@@ -101,4 +101,6 @@ public abstract class Character implements Comparable<Character> {
 		}
 	}
 	
+	public abstract String toString();
+	
 }

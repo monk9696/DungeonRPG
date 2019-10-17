@@ -65,4 +65,8 @@ public class Player extends Character implements Comparable<Character>{
 			return -1;
 		}
 	}
+	
+	public String toString() {
+		return "Player: " + getHP() ;
+	}
 }

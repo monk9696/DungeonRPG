@@ -48,4 +48,8 @@ public class Enemy extends Character implements Comparable<Character>{
 		}
 	}
 
+	public String toString() {
+		return "Enemy: Health: " + getHP() + " Defense: " + getDefence() + " Speed: " + getAgility();
+	}
+	
 }

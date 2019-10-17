@@ -19,10 +19,10 @@ public class FightRunner {
 		Character enemy3 = new Enemy(new Health(19), new Inventory());
 
 		
-		Armor a = new Armor("Main", 1, 2, "Helmet");
-		Armor b = new Armor("Main", 1, 3, "Helmet");
-		Armor c = new Armor("Main", 1, 8, "Helmet");
-		Armor d = new Armor("Main", 1, 20, "Helmet");
+		Armor a = new Armor("Main", 8, 2, "Helmet");
+		Armor b = new Armor("Main", 5, 3, "Helmet");
+		Armor c = new Armor("Main", 10, 8, "Helmet");
+		Armor d = new Armor("Main", 15, 20, "Helmet");
 		
 		
 		enemy.getEquipment().getArmor().setHelmet(a);
