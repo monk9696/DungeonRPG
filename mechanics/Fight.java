@@ -80,6 +80,20 @@ public class Fight {
 		}
 	}
 	
+	public Character getEnemy() {
+		printCombatants(1);
+		String sel = scan.next();
+		int pos;
+		try{
+			pos = Integer.parseInt(sel);
+			return getEnemy(pos);
+		}catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
+	
+	
 	public Character getEnemy(int pos){
 		int i = 1;
 		for(Character cha: group){
@@ -101,19 +115,11 @@ public class Fight {
 		switch (choice){
 			case "attack": 
 				System.out.println("Which enemy do you want to attack");
-				printCombatants(1);
-				String sel = scan.next();
-				int pos;
-				try{
-					pos = Integer.parseInt(sel);
-					Character c = getEnemy(pos);
+				Character c = getEnemy();
 					if(c != null){
 						c.damageTaken(player.getDamage());
 						break;
 					}
-				}catch (Exception e) {
-					System.out.println(e);
-				}
 				System.out.println("Selected choice was not valid");
 				playerChoice();
 				break;
@@ -121,7 +127,7 @@ public class Fight {
 				System.out.println("You did nothing");
 				break;
 			case "spell":
-				this.spell(player);
+				this.spell();
 				break;
 			case "menu":
 				this.menu();
@@ -173,26 +179,43 @@ public class Fight {
 		}
 	}
 			
-	public void spell(Character enemy){
+	public void spell(){
 		System.out.println("Which spell do you wish to use?" /*adda list of your spells+*/);
 		String spellNum = scan.next();
 		System.out.println();
 		boolean returni = false;
 		switch (spellNum){
 			case "1": 
-				returni = player.spell(1, enemy);
+				returni = player.spell(1, player);
 				break;
 			case "2":
-				returni = player.spell(2, enemy);
+				returni = player.spell(2, player);
 				break;
 			case "3":
-				returni = player.spell(3, enemy);
+				printCombatants(1);
 				break;
 			case "4":
-				returni = player.spell(4, enemy);
+				printCombatants(1);
+				String sel1 = scan.next();
+				int pos1;
+				try{
+					pos1 = Integer.parseInt(sel1);
+					Character c = getEnemy(pos1);
+					if(c != null){
+						returni = player.spell(3, c);
+						break;
+					}
+				}catch (Exception e) {
+					System.out.println(e);
+				}
 				break;
 			case "5":
-				returni = player.spell(5, enemy);
+				for(int i = 0; i < group.size()-1; i++) {
+					if (group.get(i) != player) {
+						returni = player.spell(5, group.get(i));						
+					}
+				}
+				
 				break;
 			case "exit":
 				playerChoice();
