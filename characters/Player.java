@@ -55,6 +55,10 @@ public class Player extends Character implements Comparable<Character>{
 		return false;
 	}
 
+	public void printSpells() {
+		charClass.printSpells();
+	}
+	
 	@Override
 	public int compareTo(Character s) {
 		if(s.getAgility() == this.getAgility()) {

@@ -21,6 +21,14 @@ public class WizardClass extends GenClass {
 		}
 	}
 
+	public void printSpells() {
+		System.out.println("1: Reflect");
+		System.out.println("2: Word of Healing");
+		System.out.println("3: Sudden Strike");
+		System.out.println("4: Bash");
+		System.out.println("5: Whirlwind");
+	}
+	
 	protected boolean spell1(Character user, Character target) {
 		if(spell.checkCooldown(0)) {
 			spell.setCooldown(0, 3);

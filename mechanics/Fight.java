@@ -44,7 +44,7 @@ public class Fight {
 				if (next.getHP() > 0){
 					//printCombatants();
 					if(next instanceof Player){
-						printCombatants();
+						printCombatants(1);
 						//get the players choice
 						playerChoice();
 					}else{
@@ -73,6 +73,7 @@ public class Fight {
 	}
 	
 	public void printCombatants(int i) {
+		i = 1;
 		for(Character cha: group) {
 			if(cha instanceof Enemy) {
 				System.out.println((i++) + " " + cha.toString());				
@@ -81,16 +82,22 @@ public class Fight {
 	}
 	
 	public Character getEnemy() {
+		System.out.println("Select your Target");
 		printCombatants(1);
 		String sel = scan.next();
+		Character enemy = null;
 		int pos;
 		try{
 			pos = Integer.parseInt(sel);
-			return getEnemy(pos);
+			enemy = getEnemy(pos);
 		}catch (Exception e) {
 			System.out.println(e);
 		}
-		return null;
+		if(enemy == null) {
+			System.out.println("Invalid enemy");
+			enemy = getEnemy();
+		}
+		return enemy;
 	}
 	
 	
@@ -181,6 +188,7 @@ public class Fight {
 			
 	public void spell(){
 		System.out.println("Which spell do you wish to use?" /*adda list of your spells+*/);
+		player.printSpells();
 		String spellNum = scan.next();
 		System.out.println();
 		boolean returni = false;
@@ -192,22 +200,10 @@ public class Fight {
 				returni = player.spell(2, player);
 				break;
 			case "3":
-				printCombatants(1);
+				returni = player.spell(3, getEnemy());
 				break;
 			case "4":
-				printCombatants(1);
-				String sel1 = scan.next();
-				int pos1;
-				try{
-					pos1 = Integer.parseInt(sel1);
-					Character c = getEnemy(pos1);
-					if(c != null){
-						returni = player.spell(3, c);
-						break;
-					}
-				}catch (Exception e) {
-					System.out.println(e);
-				}
+				returni = player.spell(4, getEnemy());
 				break;
 			case "5":
 				for(int i = 0; i < group.size()-1; i++) {

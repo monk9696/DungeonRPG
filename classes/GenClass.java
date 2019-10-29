@@ -13,6 +13,8 @@ public abstract class GenClass {
 	
 	public abstract String getSpellName(int spell);
 	
+	public abstract void printSpells();
+	
 	public boolean useSpell(int spellNum, Character user, Character target) {
 		switch(spellNum) {
 		case 1:

@@ -2,6 +2,7 @@ package spell;
 
 import characters.Character;
 import status.Bleeding;
+import status.Stunned;
 
 public class Spell {
 	
@@ -36,17 +37,20 @@ public class Spell {
 	public void reflect(Character user, Character target){
 		user.setReflect();			
 	}
-	//increases the damage you do on your next attack by 2.5
-	public void embolden(Character user, Character target){
-		user.setEmbolden();
+		//Heals the user based of level
+	public void wordOfHealing(Character user, Character target){
+		target.heal((user.getLevel()*3));
 	}
 	//garunteed hit on your enemy
 	public void suddenStrike(Character user, Character target){	
 		target.damageTaken(user.getDamage());
 	}
-	public void wordOfHealing(Character user, Character target){
-		target.heal((user.getLevel()*3));
+	//Stunnes the target for 3 turns and Hits the enemy
+	public void bash(Character user, Character target){
+		target.getStatus().addEffect(new Stunned(3));
+		target.damageTaken(user.getDamage());
 	}
+	//Afflicts
 	public void whirlwind(Character user, Character target){
 		target.getStatus().addEffect(new Bleeding(3,3*user.getLevel()));
 	}
