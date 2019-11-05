@@ -1,8 +1,8 @@
 package characters;
 
-
 import gear.Inventory;
 import stats.Health;
+
 
 public class Enemy extends Character implements Comparable<Character>{
 
@@ -20,13 +20,13 @@ public class Enemy extends Character implements Comparable<Character>{
 	}
 
 	public int getDamage() {
-		int dam = 0;
-		dam = inv.getEquip().getDamage();
+		int damage = 0;
+		damage += inv.getEquip().getDamage();
 		if(this.checkEffect("Embolden")) {
-			dam *= 2.5;
+			damage *= 2.5;
 			status.removeEffect("Embolden");
 		}
-		return dam;
+		return damage;
 	}
 
 	public void turnEnd() {
@@ -34,7 +34,6 @@ public class Enemy extends Character implements Comparable<Character>{
 	}
 
 	public boolean spell(int spellSelector, Character enemy) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 	

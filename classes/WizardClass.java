@@ -15,7 +15,7 @@ public class WizardClass extends GenClass {
 			case 4:
 				return "Word of Healing ";
 			case 5: 
-				//return "Whirlwind ";
+				return "Whirlwind ";
 			default:
 				return "Not a valid spell";
 		}

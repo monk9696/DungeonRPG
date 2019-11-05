@@ -55,12 +55,17 @@ public class Spell {
 		target.getStatus().addEffect(new Bleeding(3,3*user.getLevel()));
 	}
 
+
+
+
+
 	//Wizard Spell
 	public void mMissile(Character user, Character target){
 		for(int i = 0; i < user.getLevel() + 2; i++){
 			target.damageTaken(3);
 		}
 	}
+	
 	public void fireball(Character user, Character target){
 		target.damageTaken((6 * user.getLevel()));
 	}

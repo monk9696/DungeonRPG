@@ -36,7 +36,7 @@ public class Player extends Character implements Comparable<Character>{
 
 	public int getDamage() {
 		int dam = 0;
-		dam = inv.getEquip().getDamage();
+		dam += inv.getEquip().getDamage();
 		if(this.checkEffect("Embolden")) {
 			dam *= 2.5;
 			status.removeEffect("Embolden");
@@ -71,6 +71,6 @@ public class Player extends Character implements Comparable<Character>{
 	}
 	
 	public String toString() {
-		return "Player: " + getHP() ;
+		return "Player: " + getHP() + " Defense: " + getDefence() + " Speed: " + getAgility();
 	}
 }

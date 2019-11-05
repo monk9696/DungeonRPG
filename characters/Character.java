@@ -90,7 +90,7 @@ public abstract class Character implements Comparable<Character> {
 	public void setEmbolden(){
 		status.setEmbolden();
 	}
-	
+
 	public int compareTo(Character s) {
 		if(s.getAgility() == this.getAgility()){
 			return 0;

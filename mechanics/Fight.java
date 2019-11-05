@@ -3,7 +3,6 @@ package mechanics;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
-import java.util.Random;
 import java.util.Scanner;
 
 import characters.Character;
@@ -14,57 +13,11 @@ public class Fight {
 
 	private Player player;
 	private ArrayList<Character> group;
-	private Random gen = new Random();
 	private Scanner scan = new Scanner(System.in);
 	//private String sc;
 
 	public Fight() {	
 	}
-	
-	public void engagement(Character[] e){
-		group = new ArrayList<Character>(e.length);
-		for(Character next: e) {
-			if(next instanceof Player){
-				System.out.println("Player Added");
-				player = (Player) next;
-				group.add(next);
-			}else{
-				group.add(next);				
-			}
-		}
-		Collections.sort(group);
-		System.out.println("This is the begining of combat");
-		Iterator<Character> g = group.iterator();
-		
-		while(group.size() > 1 && player.getHP() > 0){
-			if(g.hasNext()){
-				//get the current player
-				Character next = g.next();
-				//check if the target is alive
-				if (next.getHP() > 0){
-					//printCombatants();
-					if(next instanceof Player){
-						printCombatants(1);
-						//get the players choice
-						playerChoice();
-					}else{
-						System.out.println("Enemy");
-						compChoice(next, player);
-					}
-					endTurn(next);
-				}else{
-					g.remove();
-				}
-			}else{
-				g = group.iterator();
-			}
-		}
-		System.out.println("Out");
-		for(Character i: group){
-			System.out.println(i);
-		}	
-	}
-	
 	
 	public void printCombatants() {
 		for(Character cha: group) {
@@ -72,8 +25,8 @@ public class Fight {
 		}
 	}
 	
-	public void printCombatants(int i) {
-		i = 1;
+	public void printEnemies() {
+		int i = 1;
 		for(Character cha: group) {
 			if(cha instanceof Enemy) {
 				System.out.println((i++) + " " + cha.toString());				
@@ -83,7 +36,7 @@ public class Fight {
 	
 	public Character getEnemy() {
 		System.out.println("Select your Target");
-		printCombatants(1);
+		printEnemies();
 		String sel = scan.next();
 		Character enemy = null;
 		int pos;
@@ -115,6 +68,99 @@ public class Fight {
 		return null;
 	}
 	
+	public void endTurn(Character c){
+		c.turnEnd();
+	}
+	
+	public void endCombat(){
+		//Combat Rewards
+		/*this.newEnemy(new Goblin(new Health(20), new Equipment(new Weapon(2),new Weapon(2),new Armor(3))));
+		this.engagement();*/
+	}
+
+	public void AIChoice(Character enemy){
+		//System.out.println("The enemy is choosing.");
+		String s = "attack";
+		if(!enemy.checkEffect("Stunned") && !enemy.checkEffect("Confused")){
+			switch (s){
+				case "attack":
+					System.out.println("The enemy chose to attack");
+					player.damageTaken(enemy.getDamage());
+					break;
+				case "heal":
+					System.out.println("The enemy chose to heal");
+					enemy.heal(5);
+					break;
+			/*	case "spell1":
+					enemy.spell(1, player);
+					break;
+				case "spell2":
+					enemy.spell(2, player);
+					break;
+				case "spell3":
+					enemy.spell(3, player);
+					break;
+				case "spell4":
+					enemy.spell(4, player);
+					break;
+				case "spell5":
+					enemy.spell(5, player);
+					break;
+			*/	default:
+					System.out.println("AI choice error. The robots are not taking over!!, They are however going crazy by using powers they are not allowed, Luckily we put in a saftey net for this and decided to kill the program. Your welcome for saving you from their unstopable attack. ");
+					//System.exit(0);
+			}
+		}else{
+			System.out.println("The enemy did nothing");
+		}
+	}	
+	
+	public void engagement(Character[] e){
+		group = new ArrayList<Character>(e.length);
+		for(Character next: e) {
+			if(next instanceof Player){
+				System.out.println("Player Added");
+				player = (Player) next;
+				group.add(next);
+			}else{
+				group.add(next);				
+			}
+		}
+		Collections.sort(group);
+		System.out.println("This is the begining of combat");
+		Iterator<Character> g = group.iterator();
+		
+		while(group.size() > 1 && player.getHP() > 0){
+			if(g.hasNext()){
+				//get the current player
+				Character next = g.next();
+				//check if the target is alive
+				if (next.getHP() > 0){
+					//printCombatants();
+					if(next instanceof Player){
+						printEnemies();
+						System.out.println(player);
+						//get the players choice
+						playerChoice();
+					}else{
+						System.out.println("Enemy");
+						AIChoice(next);
+					}
+					endTurn(next);
+				}else{
+					g.remove();
+				}
+			}else{
+				g = group.iterator();
+			}
+		}
+		System.out.println("Out");
+		for(Character i: group){
+			System.out.println(i);
+		}	
+	}
+	
+		
 	public void playerChoice(){
 		System.out.println("What do you want to do");
 		System.out.println("Attack, Nothing, Spell, Menu");
@@ -148,44 +194,7 @@ public class Fight {
 	/*
 	 * set up the spells to be self,self, target, target, ult which is all enemies
 	 */
-	
-	public void compChoice(Character enemy, Character player){
-		//System.out.println("The enemy is choosing.");
-		String s = "a";
-		if(!enemy.checkEffect("Stunned") && !enemy.checkEffect("Confused")){
-			switch (s){
-				case "attack":
-					System.out.println("The enemy chose to attack");
-					player.damageTaken(enemy.getDamage());
-					break;
-				case "heal":
-					System.out.println("The enemy chose to heal");
-					enemy.heal(5);
-					break;
-				case "spell1":
-					enemy.spell(1, player);
-					break;
-				case "spell2":
-					enemy.spell(2, player);
-					break;
-				case "spell3":
-					enemy.spell(3, player);
-					break;
-				case "spell4":
-					enemy.spell(4, player);
-					break;
-				case "spell5":
-					enemy.spell(5, player);
-					break;
-				default:
-					System.out.println("AI choice error. The robots are not taking over!!, They are however going crazy by using powers they are not allowed, Luckily we put in a saftey net for this and decided to kill the program. Your welcome for saving you from their unstopable attack. ");
-					//System.exit(0);
-			}
-		}else{
-			System.out.println("The enemy did nothing");
-		}
-	}
-			
+				
 	public void spell(){
 		System.out.println("Which spell do you wish to use?" /*adda list of your spells+*/);
 		player.printSpells();
@@ -255,31 +264,4 @@ public class Fight {
 		playerChoice();
 	}
 	
-	public boolean dieD20(){
-		int playerdie =(gen.nextInt(20)+1);
-		int enemydie =(gen.nextInt(20)+1);
-		System.out.println("Player roll: " + playerdie);
-		System.out.println("Enemy roll: " + enemydie);
-		if (playerdie > enemydie){
-			System.out.println("Player Won");
-			return true;
-		}else if (playerdie == enemydie){
-			System.out.println("Draw re-roll.");
-			System.out.println();
-			return dieD20();
-		}else{
-			System.out.println("Enemy Won");
-			return false;
-		}
-	}
-
-	public void endTurn(Character c){
-		c.turnEnd();
-	}
-	public void endCombat(){
-		//Combat Rewards
-		/*this.newEnemy(new Goblin(new Health(20), new Equipment(new Weapon(2),new Weapon(2),new Armor(3))));
-		this.engagement();*/
-	}
-
 }
