@@ -16,7 +16,7 @@ public class ArmorSet {
 		this.greaves = new Armor("None",0,0,"Greaves");
 		this.boots = new Armor("None",0,0,"Boots");
 		this.rings = new Armor[10];
-		setRings(new Armor[0]);
+		setRings(new Armor[] {});
 	}
 	
 	public ArmorSet(Armor[] armor, Armor[] rings) {
