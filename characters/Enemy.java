@@ -4,12 +4,18 @@ import gear.Inventory;
 import stats.Health;
 
 
-public class Enemy extends Character implements Comparable<Character>{
+public abstract class Enemy extends Character{
 
+	public Enemy() {
+		super();
+	}
+	
 	public Enemy(Health hp, Inventory inv) {
 		super(hp, inv);
 	}
 
+	public abstract String CombatChoice();
+	
 	public void damageTaken(int damage) {
 		if(this.checkEffect("Reflect")) {
 			status.removeEffect("Reflect");
@@ -20,8 +26,7 @@ public class Enemy extends Character implements Comparable<Character>{
 	}
 
 	public int getDamage() {
-		int damage = 0;
-		damage += inv.getEquip().getDamage();
+		int damage = inv.getEquip().getDamage();
 		if(this.checkEffect("Embolden")) {
 			damage *= 2.5;
 			status.removeEffect("Embolden");
@@ -33,20 +38,9 @@ public class Enemy extends Character implements Comparable<Character>{
 		status.turnTic();
 	}
 
-	public boolean spell(int spellSelector, Character enemy) {
-		return false;
-	}
-	
-	public int compareTo(Character s) {
-		if(s.getAgility() == this.getAgility()) {
-			return 0;
-		}else if(s.getAgility() < this.getAgility()) {
-			return 1;
-		}else {
-			return -1;
-		}
-	}
+	public abstract boolean spell(int spellSelector, Character enemy);
 
+	
 	public String toString() {
 		return "Enemy: Health: " + getHP() + " Defense: " + getDefence() + " Speed: " + getAgility();
 	}

@@ -13,6 +13,13 @@ public abstract class Character implements Comparable<Character> {
 	protected StatusModifiers status;
 	protected int level = 1;
 	
+	public Character() {
+		inv = new Inventory();
+		h = new Health();
+		status = new StatusModifiers(h);
+		
+	}
+	
 	public Character(Health hp, Inventory inv){
 		h = hp;
 		this.inv = inv;
@@ -94,7 +101,7 @@ public abstract class Character implements Comparable<Character> {
 	public int compareTo(Character s) {
 		if(s.getAgility() == this.getAgility()){
 			return 0;
-		}else if(s.getAgility() < this.getAgility()) {
+		}else if(s.getAgility() > this.getAgility()) {
 			return 1;
 		}else {
 			return -1;

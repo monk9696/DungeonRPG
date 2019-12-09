@@ -2,26 +2,31 @@ package gear;
 
 public class ArmorSet {
 	
-	private Armor helmet = new Armor("None",0,5,"Helmet");
-	private Armor chestPlate = new Armor("None",0,5,"ChestPlate");
-	private Armor gloves = new Armor("None",0,5,"Gloves");
-	private Armor greaves = new Armor("None",0,5,"Greaves");
-	private Armor boots = new Armor("None",0,5,"Boots");
-	private Armor[] rings = new Armor[10];
+	private Armor helmet;
+	private Armor chestPlate;
+	private Armor gloves;
+	private Armor greaves;
+	private Armor boots;
+	private Armor[] rings;
 	
 	public ArmorSet() {
+		this.helmet = new Armor("None",0,0,"Helmet");
+		this.chestPlate = new Armor("None",0,0,"ChestPlate");
+		this.gloves = new Armor("None",0,0,"Gloves");
+		this.greaves = new Armor("None",0,0,"Greaves");
+		this.boots = new Armor("None",0,0,"Boots");
+		this.rings = new Armor[10];
 		setRings(new Armor[0]);
 	}
-
-	public ArmorSet(Armor helmet, Armor chestPlate, Armor gloves, Armor greaves, Armor boots, Armor[] rings) {
-		this.helmet = helmet;
-		this.chestPlate = chestPlate;
-		this.gloves = gloves;
-		this.greaves = greaves;
-		this.boots = boots;
+	
+	public ArmorSet(Armor[] armor, Armor[] rings) {
+		this();
+		for(Armor arm: armor) {
+			this.setArmor(arm);
+		}
 		setRings(rings);
 	}
-
+	
 	public void setRings(Armor[] rings) {
 		if(rings.length <= 10) {
 			for(int i = 0; i < rings.length; i++) {
@@ -34,68 +39,33 @@ public class ArmorSet {
 			}
 		}
 	}
-	
-	public Armor getHelmet() {
-		return helmet;
-	}
-	public void setHelmet(Armor helmet) {
-		if(helmet.getType().equals("helmet") || helmet.getType().equals("Helmet")) {
-			this.helmet = helmet;
-		}else {
-			System.out.println("Not equiped");
-		}
-	}
-
-	public Armor getChestPlate() {
-		return chestPlate;
-	}
-	public void setChestPlate(Armor chestPlate) {
-		if(chestPlate.getType().equals("chest plate") || chestPlate.getType().equals("Chest Plate")) {
-			this.chestPlate = chestPlate;
-		}else {
-			System.out.println("Not equiped");
-		}
-	}
-
-	public Armor getGloves() {
-		return gloves;
-	}
-	public void setGloves(Armor gloves) {
-		if(gloves.getType().equals("gloves") || gloves.getType().equals("Gloves")) {
-			this.gloves = gloves;
-		}else {
-			System.out.println("Not equiped");
-		}
-	}
-
-	public Armor getGreaves() {
-		return greaves;
-	}
-	public void setGreaves(Armor greaves){
-		if(greaves.getType().equals("greaves") || greaves.getType().equals("Greaves")) {
-			this.greaves = greaves;
-		}else {
-			System.out.println("Not equiped");
-		}
-	}
-
-	public Armor getBoots() {
-		return boots;
-	}
-	public void setBoots(Armor boots) {
-		if(boots.getType().equals("boots") || boots.getType().equals("Boots")) {
-			this.boots = boots;
-		}else {
-			System.out.println("Not equiped");
-		}
-	}
-
-	public Armor getRings(int loc) {
-		return rings[loc];
-	}
-
-	public Armor swapRings(Armor ring, int loc) {
 		
+	public void setArmor(Armor armor){
+		switch(armor.getType().toLowerCase()){
+			case "helmet":
+				helmet = armor;
+				break;
+			case "chestplate":
+				chestPlate = armor;
+				break;
+			case "gloves":
+				gloves = armor;
+				break;
+			case "greaves":
+				greaves = armor;
+				break;
+			case "boots":
+				boots = armor;
+				break;
+			case "ring":
+				System.out.println("Rings should be equiped by using swapRing, If you are the player this is an issue.");
+				break;
+			default:
+				System.out.println(armor.getType() + ": Not equiped");
+		}
+	}
+	
+	public Armor swapRings(Armor ring, int loc) {
 		if(ring.getType().equals("ring") || ring.getType().equals("Ring")) {
 			if(rings[loc] == null) {
 				rings[loc] = ring;
@@ -110,12 +80,37 @@ public class ArmorSet {
 			return ring;
 		}	
 	}
-	
+
 	public Armor removeRing(int loc) {
 		Armor out = rings[loc];
 		rings[loc] = new Armor("None", 0, 0, "Ring");
 		return out;
 	}
+	
+	public Armor getHelmet(){
+		return helmet;
+	}
+
+	public Armor getChestPlate() {
+		return chestPlate;
+	}
+	
+	public Armor getGloves() {
+		return gloves;
+	}
+
+	public Armor getGreaves() {
+		return greaves;
+	}
+	
+	public Armor getBoots() {
+		return boots;
+	}
+	
+	public Armor getRings(int loc) {
+		return rings[loc];
+	}
+
 	
 	public int getDef() {
 		int def = 0;

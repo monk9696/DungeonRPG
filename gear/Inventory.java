@@ -18,19 +18,16 @@ public class Inventory {
 	}
 
 	public Inventory(Equipment equip) {
-		money = new Money();
-		armorList = new ArrayList<Armor>();
-		weaponList = new ArrayList<Weapon>();
+		this();
 		this.equip = equip;
 	}
 
 	public Equipment getEquip() {
 		return equip;
-	}
+	}	
 	public void setEquip(Equipment equip) {
 		this.equip = equip;
 	}
-
 
 	public Money getMoney() {
 		return money;
@@ -39,14 +36,12 @@ public class Inventory {
 		this.money = money;
 	}
 
-
 	public ArrayList<Armor> getArmorList() {
 		return armorList;
 	}
 	public void setArmorList(ArrayList<Armor> armorList) {
 		this.armorList = armorList;
 	}
-
 
 	public ArrayList<Weapon> getWeaponList() {
 		return weaponList;
@@ -55,6 +50,5 @@ public class Inventory {
 		this.weaponList = weaponList;
 	}
 
-	
 	
 }

@@ -4,27 +4,36 @@ package gear;
 public class Equipment {
 	
 	//Variables
-	private Weapon primary = new Weapon();
-	private Weapon secondary = new Weapon();
+	private Weapon primary;
+	private Weapon secondary;
 	private ArmorSet armor;
 	
 	//constructors
 	public Equipment (){
+		primary = new Weapon();
+		secondary = new Weapon();
 		armor = new ArmorSet();
 	}
 	
+	public Equipment(Weapon weapon) {
+		this();
+		this.primary = weapon;
+	}
+	
 	public Equipment(Weapon weapon, ArmorSet armor) {
-		primary = weapon;
+		this();
+		this.primary = weapon;
 		this.armor = armor;
 	}
 	
 	public Equipment(Weapon primary, Weapon secondary) {
+		this();
 		this.primary = primary;
 		this.secondary = secondary;
-		this.armor = new ArmorSet();
 	}
 	
 	public Equipment (Weapon primary, Weapon secondary, ArmorSet armor){
+		this();
 		this.primary = primary;
 		this.secondary = secondary;
 		this.armor = armor;	
@@ -61,13 +70,15 @@ public class Equipment {
 			return (primary.getDamage());
 		}
 	}
+	
 	public int getDefence() {
 		return armor.getDef();
 	}
+	
 	public int getAgility() {
 		return armor.getAgility();
 	}
-		
+	
 	//Primary
 	public String getPrimaryName(){
 		return primary.getName();
@@ -78,7 +89,9 @@ public class Equipment {
 	public boolean getPrimaryDual(){
 		return primary.isDualWield();
 	}
-	
+	public Weapon getPrimary() {
+		return primary;
+	}
 	//Secondary
 	public String getSecondaryName(){
 		return secondary.getName();
@@ -89,11 +102,15 @@ public class Equipment {
 	public boolean getSecondaryDual(){
 		return secondary.isDualWield();
 	}
-
+	public Weapon getSecondary() {
+		return secondary;
+	}
+	
 	//Armor
 	public ArmorSet getArmor() {
 		return armor;
 	}
+	
 	public Armor getPeice(String type, int loc) {
 		switch(type) {
 			case "helmet":

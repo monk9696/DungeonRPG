@@ -78,13 +78,12 @@ public class Fight {
 		this.engagement();*/
 	}
 
-	public void AIChoice(Character enemy){
+	public void AIChoice(Enemy enemy){
 		//System.out.println("The enemy is choosing.");
-		String s = "attack";
 		if(!enemy.checkEffect("Stunned") && !enemy.checkEffect("Confused")){
-			switch (s){
+			switch (enemy.CombatChoice()){
 				case "attack":
-					System.out.println("The enemy chose to attack");
+					System.out.println("The enemy chose to attack for: " + enemy.getDamage());
 					player.damageTaken(enemy.getDamage());
 					break;
 				case "heal":
@@ -142,9 +141,12 @@ public class Fight {
 						System.out.println(player);
 						//get the players choice
 						playerChoice();
-					}else{
+					}else if(next instanceof Enemy){
 						System.out.println("Enemy");
-						AIChoice(next);
+						AIChoice((Enemy) next);
+					}else {
+						System.out.println("Total unknown Character0");
+						System.exit(-1);
 					}
 					endTurn(next);
 				}else{

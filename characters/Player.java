@@ -71,6 +71,6 @@ public class Player extends Character implements Comparable<Character>{
 	}
 	
 	public String toString() {
-		return "Player: " + getHP() + " Defense: " + getDefence() + " Speed: " + getAgility();
+		return "Player: Health: " + getHP() + " Defense: " + getDefence() + " Speed: " + getAgility();
 	}
 }

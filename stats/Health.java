@@ -10,6 +10,10 @@ public class Health {
 	private int currentHP;
 	private int maxHP;
 	
+	public Health() {
+		maxHP = 10;
+		currentHP = 10;
+	}
 
 	public Health(int hp){
 		maxHP = hp;

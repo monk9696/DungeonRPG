@@ -47,7 +47,9 @@ public class Weapon {
 		this.dualWield = dualWield;
 	}
 	
-	
+	public boolean equals(Weapon weap) {
+		return (weap.getName() == this.name && weap.getDamage() == this.damage && weap.isDualWield() == this.dualWield);
+	}
 	
 	
 	
