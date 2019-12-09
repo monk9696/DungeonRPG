@@ -5,18 +5,11 @@ import java.util.ArrayList;
 import stats.Health;
 import util.Pair;
 
-/**
- * Bleeding Status Effect
- */
 
 public class Bleeding implements StatusEffect {
 
 	private ArrayList<Pair<Integer,Integer>> bleed;
 	
-	
-	/**
-	 * Creates the Bleeding status effect
-	 */
 	public Bleeding(int duration, int damage) {
 		bleed = new ArrayList<Pair<Integer,Integer>>();
 		bleed.add(new Pair<Integer, Integer>(duration,damage));
